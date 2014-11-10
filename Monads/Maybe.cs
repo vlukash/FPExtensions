@@ -6,45 +6,44 @@ namespace Monads
     [DebuggerStepThrough]
     public struct Maybe
     {
-        public static Maybe<T> Apply<T>(T value)
+        public static Maybe<TInput> Apply<TInput>(TInput value)
         {
-            return new Maybe<T>(value);
+            return new Maybe<TInput>(value);
         }
     }
 
     [DebuggerStepThrough]
-    public struct Maybe<T>
+    public struct Maybe<TInput>
     {
-        readonly T value;
+        readonly TInput value;
         readonly bool isSome;
 
-        public Maybe(T value)
+        public Maybe(TInput value)
         {
             isSome = value != null;
             this.value = value;
         }
 
         public bool IsSome { get { return isSome; } }
-
         public bool IsNone { get { return !isSome; } }
+        public static readonly Maybe<TInput> None = new Maybe<TInput>();
 
-        public static readonly Maybe<T> None = new Maybe<T>();
 
-        public Maybe<A> Bind<A>(Func<T, A> func)
+        public Maybe<TResult> Bind<TResult>(Func<TInput, TResult> evaluator)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (evaluator == null) throw new ArgumentNullException("evaluator");
 
-            return isSome ? Maybe.Apply(func(value)) : Maybe<A>.None;
+            return isSome ? Maybe.Apply(evaluator(value)) : Maybe<TResult>.None;
         }
 
-        public Maybe<A> Bind<A>(Func<T, Maybe<A>> func)
+        public Maybe<TResult> Bind<TResult>(Func<TInput, Maybe<TResult>> evaluator)
         {
-            if (func == null) throw new ArgumentNullException("func");
+            if (evaluator == null) throw new ArgumentNullException("evaluator");
 
-            return isSome ? func(value) : Maybe<A>.None;
+            return isSome ? evaluator(value) : Maybe<TResult>.None;
         }
 
-        public A Match<A>(Func<A> none, Func<T, A> some)
+        public TResult Match<TResult>(Func<TResult> none, Func<TInput, TResult> some)
         {
             if (none == null) throw new ArgumentNullException("none");
             if (some == null) throw new ArgumentNullException("some");
@@ -52,7 +51,7 @@ namespace Monads
             return isSome ? some(value) : none();
         }
 
-        public void Match(Action none, Action<T> some)
+        public void Match(Action none, Action<TInput> some)
         {
             if (none == null) throw new ArgumentNullException("none");
             if (some == null) throw new ArgumentNullException("some");

@@ -6,14 +6,14 @@ namespace Monads.Tests.MonadsTests
     public class MaybeTests
     {
         [Test]
-        public void ToMaybe_should_not_thrown_exception_on_null_reference()
+        public void Apply_should_not_thrown_exception_on_null_reference()
         {
             string nullStr = null;
             Maybe.Apply(nullStr);
         }
 
         [Test]
-        public void ToMaybe_should_not_throw_exception_on_nullable_value_type()
+        public void Apply_should_not_throw_exception_on_nullable_value_type()
         {
             int? i = null;
             Maybe.Apply(i);
