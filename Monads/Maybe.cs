@@ -43,7 +43,7 @@ namespace Monads
             return isSome ? evaluator(value) : Maybe<TResult>.None;
         }
 
-        public TResult Match<TResult>(Func<TResult> none, Func<T, TResult> some)
+        public TResult Return<TResult>(Func<TResult> none, Func<T, TResult> some)
         {
             if (none == null) throw new ArgumentNullException("none");
             if (some == null) throw new ArgumentNullException("some");
@@ -51,7 +51,7 @@ namespace Monads
             return isSome ? some(value) : none();
         }
 
-        public void Match(Action none, Action<T> some)
+        public void Return(Action none, Action<T> some)
         {
             if (none == null) throw new ArgumentNullException("none");
             if (some == null) throw new ArgumentNullException("some");

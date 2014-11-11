@@ -129,6 +129,30 @@ namespace Monads.Tests.MonadsTests
             Assert.IsFalse(result.IsSome);
             Assert.AreEqual(count, 0);
         }
+
+        [Test]
+        public void Return_should_return_some_if_not_null()
+        {
+            string str = "not null";
+            string result = Maybe.Apply(str)
+                              .Return(
+                                  some: s => s,
+                                  none: () => string.Empty
+                              );
+            Assert.AreEqual(str, result);
+        }
+
+        [Test]
+        public void Return_should_return_none_if_null()
+        {
+            string nullStr = null;
+            string result = Maybe.Apply(nullStr)
+                              .Return(
+                                  some: s => s,
+                                  none: () => string.Empty 
+                              );
+            Assert.AreEqual(string.Empty, result);
+        }
     }
 
 }
