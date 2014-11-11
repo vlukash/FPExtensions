@@ -76,6 +76,24 @@ namespace Monads.Tests.MonadsTests
             var result = Maybe.Apply(str).Bind(s => s.IndexOf("T"));
             Assert.IsTrue(result.IsNone);
         }
+
+        [Test]
+        public void If_should_return_not_null_for_true_statement()
+        {
+            string str = "11 char str";
+            var result = Maybe.Apply(str)
+                              .If(s => s.Length == 11);
+            Assert.IsTrue(result.IsSome);
+        }
+
+        [Test]
+        public void If_should_return_null_for_false_statement()
+        {
+            string str = "11 char str";
+            var result = Maybe.Apply(str)
+                              .If(s => s.Length == 0);
+            Assert.IsTrue(result.IsNone);
+        }
     }
 
 }
