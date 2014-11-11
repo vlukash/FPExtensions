@@ -49,13 +49,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Monads\Monads.csproj">
-      <Project>{1e30cc0e-5911-4ec3-8198-3a7058c81546}</Project>
-      <Name>Monads</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\Monads\Monads.csproj">
+      <Project>{15bc19be-2cd6-4ec3-9cb2-bc2e794ade0e}</Project>
+      <Name>Monads</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

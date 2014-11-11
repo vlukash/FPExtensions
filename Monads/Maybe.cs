@@ -66,5 +66,16 @@ namespace Monads
 
             return isSome && predicate(value) ? this : Maybe<T>.None;
         }
+
+        public Maybe<T> Do(Action<T> action)
+        {
+            if (action == null) throw new ArgumentNullException("action");
+
+            if (!isSome)
+                return Maybe<T>.None;
+
+            action(value);
+            return this;            
+        }
     }
 }

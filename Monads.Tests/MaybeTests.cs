@@ -94,6 +94,41 @@ namespace Monads.Tests.MonadsTests
                               .If(s => s.Length == 0);
             Assert.IsTrue(result.IsNone);
         }
+
+        [Test]
+        public void If_should_return_false_if_value_is_null()
+        {
+            string nullStr = null;
+            var strMaybe = Maybe.Apply(nullStr)
+                                .If(s => s.Length == 1);
+            Assert.IsFalse(strMaybe.IsSome);
+        }
+
+        [Test]
+        public void Do_should_execute_and_do_not_change_some_context()
+        {
+            string str = "str";
+            int strLength = 0;
+
+            var result = Maybe.Apply(str)
+                              .Do(s => strLength = s.Length);
+
+            Assert.IsTrue(result.IsSome);
+            Assert.AreEqual(strLength, str.Length);
+        }
+
+        [Test]
+        public void Do_should_do_not_execute_if_value_is_null()
+        {
+            string nullStr = null;
+            int count = 0;
+
+            var result = Maybe.Apply(nullStr)
+                              .Do(s => count++);
+
+            Assert.IsFalse(result.IsSome);
+            Assert.AreEqual(count, 0);
+        }
     }
 
 }
